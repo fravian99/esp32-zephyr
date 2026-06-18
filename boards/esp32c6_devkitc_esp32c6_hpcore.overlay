@@ -1,3 +1,25 @@
+/ {
+    dht: dht {
+        compatible = "aosong,dht";
+        dio-gpios = <&gpio0 10 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+        status = "okay";
+    };
+
+    aliases {
+        temp-sensor = &dht;
+    };
+};
+
+/ {
+    aliases {
+        die-temp= &coretemp;
+    };
+};
+
 &coretemp {
+    status = "okay";
+};
+
+&gpio0 {
     status = "okay";
 };
