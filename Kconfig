@@ -1,0 +1,34 @@
+menu "WS2812 Configuration"
+
+config LED_UPDATE_DELAY
+	int "Delay between LED updates in ms"
+	default 50
+	help
+	  Delay between LED updates in ms.
+
+config LED_BRIGHTNESS
+	int "LED brightness"
+	default 16
+	range 1 255
+	help
+	  Brightness level of each LED. Defaults to a low value to make
+	  it easier to distinguish colors.
+
+endmenu
+
+menu "Temp config"
+
+config HIGH_TEMP
+	int "High threshold temperature"
+	default 26
+	help 
+		High threshold temperature
+
+config LOW_TEMP
+	int "Low threshold temperature"
+	default 23
+	help 
+		Low threshold temperature
+
+endmenu
+source "Kconfig.zephyr"
