@@ -20,15 +20,25 @@ menu "Temp config"
 
 config HIGH_TEMP
 	int "High threshold temperature"
-	default 26
+	default 29
 	help 
 		High threshold temperature
 
 config LOW_TEMP
 	int "Low threshold temperature"
-	default 23
+	default 25
 	help 
 		Low threshold temperature
+
+endmenu
+
+menu "Bluetooth" 
+	config SAMPLE_BT_USE_AUTHENTICATION
+	bool "Enable passkey authentication"
+	default y
+	help
+	  Enable the passkey authentication callback and register the GATT
+	  read and write attributes as authentication required.
 
 endmenu
 source "Kconfig.zephyr"

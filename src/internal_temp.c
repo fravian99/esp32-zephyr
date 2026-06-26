@@ -1,4 +1,4 @@
-#include "internal_temp.h"
+#include <zephyr/kernel.h>
 #include <zephyr/drivers/sensor.h>
 #include <zephyr/sys/printk.h>
 
@@ -30,7 +30,6 @@ int get_internal_temp(const struct device* internal_temp_dev, double* temp_pt, b
     if (err) {
         return 1;
     }
-    printk("Temperatura interna: %.1f ºC\n", *temp_pt);
     return 0;
 }
 
@@ -40,7 +39,6 @@ int get_temp(const struct device* temp_dev, double* temp_pt, bool with_fetch)
     if (err) {
         return 1;
     }
-    printk("Temperatura: %.1f ºC\n", *temp_pt);
     return 0;
 }
 
@@ -50,6 +48,5 @@ int get_hum(const struct device* hum_dev, double* hum_pt, bool with_fetch)
     if (err) {
         return 1;
     }
-    printk("Humedad: %.1f \n", *hum_pt);
     return 0;
 }
