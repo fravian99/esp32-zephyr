@@ -10,14 +10,17 @@
 
 #if defined(CONFIG_BT_PERIPHERAL)
 #include "ble_utils.h"
+#include "ble_services.h"
 #endif
 
 static const struct device* const internal_temp_dev = DEVICE_DT_GET(DT_ALIAS(die_temp));
 static const struct device* const temp_dev = DEVICE_DT_GET(DT_ALIAS(temp_sensor));
 static const struct device* const rgb_led_dev = DEVICE_DT_GET(DT_ALIAS(rgb_led));
 
+static double internal_temp = 0., temp = 0., old_temp = 0., hum = 0.;
+
 static colors_t get_color_by_temp(double temp);
-static double internal_temp = 0., temp = 0., hum = 0.;
+static void temp_changed(double actual_temp, double old_temp);
 
 int main(void)
 {
@@ -62,10 +65,27 @@ int main(void)
         printk("Temperatura interna: %.1f ºC\n", internal_temp);
         printk("Temperatura: %.1f ºC\n", temp);
         printk("Humedad: %.1f \n", hum);
+#else
+        temp_changed(temp, old_temp);
+        send_temp_notify(temp);
+        send_hum_notify(hum);
 #endif
+        old_temp = temp;
         k_msleep(500);
     }
     return 0;
+}
+
+static void temp_changed(double actual_temp, double old_temp) 
+{
+    bool has_increased, has_decreased;
+    has_increased = actual_temp > old_temp;
+    has_decreased = actual_temp < old_temp;
+    if (has_increased) {
+        send_temp_state_indicate('+');
+    } else if (has_decreased) {
+        send_temp_state_indicate('-');
+    } 
 }
 
 double prepare_ble_temp(void) {

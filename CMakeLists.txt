@@ -6,4 +6,4 @@ find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 project(esp32-zephyr)
 
 target_include_directories(app PRIVATE include)
-target_sources(app PRIVATE src/main.c src/internal_temp.c src/rgb_led.c src/ble_utils.c)
+target_sources(app PRIVATE src/main.c src/internal_temp.c src/rgb_led.c src/ble_utils.c src/ble_services.c)
